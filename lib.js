@@ -21,7 +21,7 @@ lib = {
     //icao data
     icao: icao,
     //functions
-    async getMetar(date, ) {
+    async getMetar(date, bbox) {
         const options = {
             method: 'GET',
             url: 'https://aviationweather.gov/api/data/metar',
