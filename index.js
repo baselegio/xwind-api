@@ -1,3 +1,6 @@
+// index.js
+// contains the api endpoint
+
 const express = require("express");
 const app = express();
 const bodyParser = require('body-parser');
@@ -34,6 +37,13 @@ app.post("/", async (req, res, next) => {
         });
     }
     //check to make sure each airport is an ICAO
+    for (airport of req.body.airports) {
+        if (!lib.icao[airport]) {
+            return res.status(400).json({
+                error: "Invalid Airport: " + airport,
+            });
+        }
+    }
     
     try {
         await lib.getMetar(date.toISOString());
