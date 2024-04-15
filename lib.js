@@ -2,24 +2,7 @@
 // reusable functions
 const axios = require('axios');
 
-let icao;
-
-//ingest ICAO data (only fires on startup)
-const startTime = performance.now();
-axios.request({
-    method: 'GET',
-    url: 'https://raw.githubusercontent.com/mwgg/Airports/master/airports.json',
-}).then(function (response) {
-    //console.log(response.data)
-    icao = response.data;
-    const endTime = performance.now();
-    console.info(`STATUS: ${Object.keys(icao).length} ICAO airports ingested`)
-    console.info(`STATUS: ICAO Ingest completed in ${endTime - startTime} ms`);
-});
-
-lib = {
-    //icao data
-    icao: icao,
+let lib = {
     //functions
     async getMetar(date, bbox) {
         const options = {
@@ -36,5 +19,18 @@ lib = {
         });
     }
 }
+
+//ingest ICAO data (only fires on startup)
+const startTime = performance.now();
+axios.request({
+    method: 'GET',
+    url: 'https://raw.githubusercontent.com/mwgg/Airports/master/airports.json',
+}).then(function (response) {
+    //console.log(response.data)
+    lib.icao = response.data;
+    const endTime = performance.now();
+    console.info(`STATUS: ${Object.keys(lib.icao).length} ICAO airports ingested`)
+    console.info(`STATUS: ICAO Ingest completed in ${endTime - startTime} ms`);
+});
 
 module.exports = lib;
