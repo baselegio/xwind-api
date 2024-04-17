@@ -44,6 +44,13 @@ app.post("/", async (req, res, next) => {
             });
         }
     }
+
+    //draw a bounding box between the points, and 50 miles in width
+    coords1 = [lib.icao[req.body.airports[0]].lat, lib.icao[req.body.airports[0]].lon];
+    coords2 = [lib.icao[req.body.airports[1]].lat, lib.icao[req.body.airports[1]].lon];
+
+    return res.json(lib.calculateBBox(coords1[0], coords1[1], coords2[0], coords2[1]));
+
     
     try {
         await lib.getMetar(date.toISOString());
